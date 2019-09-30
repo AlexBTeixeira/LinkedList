@@ -9,6 +9,7 @@ public class Main {
         L1.add(9);
 
         L1.reverse();
+        L1.unique();
 
 
             System.out.println(L1.toString());

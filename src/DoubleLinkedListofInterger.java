@@ -14,7 +14,7 @@ public class DoubleLinkedListofInterger {
 
     private Node header;
     private Node trailer;
-    private int count =0;
+    private int count = 0;
 
     DoubleLinkedListofInterger() {
         header = new Node(null);
@@ -118,7 +118,7 @@ public class DoubleLinkedListofInterger {
         Node current = header;
         for (int i = 0; i < count; i++) {
             current = current.next;
-            if((current.element).equals(element)){
+            if ((current.element).equals(element)) {
                 current.next.prev = current.prev;
                 current.prev.next = current.next;
                 return true;
@@ -179,14 +179,14 @@ public class DoubleLinkedListofInterger {
         return count;
     }
 
-    public String toString(){
+    public String toString() {
         StringBuilder s = new StringBuilder();
         Node aux = header.next;
 
-        for(int i =0; i<count;i++){
+        for (int i = 0; i < count; i++) {
             s.append(aux.element.toString());
             s.append("\n");
-            aux =aux.next;
+            aux = aux.next;
         }
         return s.toString();
     }
@@ -202,29 +202,44 @@ public class DoubleLinkedListofInterger {
         return s.toString();
     }
 
-    void reverse(){
-
-        Node current = header;
+    void reverse() {
+        if (isEmpty()) return;
         Node temp = null;
+        Node current = header.next;
 
-        while(current!=null){
 
-            temp = current.next;
-            current.next = current.prev;
-            current.prev = temp;
-            current = current.next;
+        while (current != null) {
+            temp = current.prev;
+            current.prev = current.next;
+            current.next = temp;
+            current = current.prev;
         }
 
+        if (temp != null) {
+            header = temp.prev;
+        }
     }
 
-    public void unique(){
-        for(int i = 0; i<count; i++){
-            int num = get(i);
-            for( int j = i+1; j< count;j++){
-                if(num == get(j)){
-                        removeByIndex(j);
+     void unique() {
+        if (isEmpty()) return;
+        if (count == 1) return;
+
+        Node aux = header.next;
+
+
+        for (int i = 0; i < count; i++) {
+
+            Node compara = aux.next;
+            while (compara != null) {
+                if (aux.element.equals(compara.element)) {
+                    compara.next.prev = aux;
+                    aux.next = compara.next;
+                    count--;
                 }
+                compara = compara.next;
+
             }
+            aux = aux.next;
         }
     }
 }
